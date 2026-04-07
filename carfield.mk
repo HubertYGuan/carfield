@@ -41,6 +41,9 @@ HYP_ROOT    := $(shell $(BENDER) path hyperbus)
 # Questasim
 CAR_VSIM_DIR := $(CAR_TGT_DIR)/sim/vsim
 
+# VCS
+CAR_VCS_DIR  := $(CAR_TGT_DIR)/sim/vcs
+
 BENDER      ?= bender
 BENDER_ROOT ?= $(CAR_ROOT)/.bender
 BENDER_PATH ?= $(shell which $(BENDER))

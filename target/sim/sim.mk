@@ -7,6 +7,8 @@
 ## @section Carfield platform simulation
 
 QUESTA ?= questa-2023.4
+# Version 2020.03-SP2-6
+VCS ?= vcs
 TBENCH ?= tb_carfield_soc
 
 ## Get HyperRAM verification IP (VIP) for simulation
@@ -128,8 +130,83 @@ car-vsim-sim-run:
 #######
 ## @section VCS simulator target
 
+VCS_FLAGS := -full64 -diag=dvfs
+ifdef DEBUG
+	VCS_COMPILE_FLAGS := $(VCS_FLAGS) -debug_acc +acc
+	VCS_RUN_FLAGS := -gui
+else
+	VCS_COMPILE_FLAGS := $(VCS_FLAGS)
+	VCS_RUN_FLAGS := -batch
+endif
+
+.PHONY: $(CAR_VCS_DIR)/compile.carfield_soc.sh
+$(CAR_VCS_DIR)/compile.carfield_soc.sh:
+	mkdir -p $(CAR_VCS_DIR)
+	$(BENDER) script vcs $(common_targs) $(sim_targs) $(common_defs) $(safed_defs) --vlog-arg="$(RUNTIME_DEFINES)" --compilation-mode separate > $@
+	echo 'g++ -std=c++11 -shared -fPIC -o $(CAR_VCS_DIR)/elfloader.so "$(CHS_ROOT)/target/sim/src/elfloader.cpp"' >> $@
+	echo 'vlc -sverilog $(VCS_COMPILE_FLAGS) -top $(TBENCH) -o $(CAR_VCS_DIR)/simv' >> $@
+
 CAR_VCS_ALL += $(CAR_SIM_ALL)
-# TODO
+CAR_VCS_ALL += $(CAR_VCS_DIR)/compile.carfield_soc.sh
+
+## Generate all required VIPs (SPI flash, I2c EEPROm, HyperRAM, etc) and compilation scripts for VCS
+.PHONY: car-vcs-sim-init
+car-vcs-sim-init: $(CAR_VCS_ALL)
+
+## Compile Carfield HW using VCS. Run `make car-sim-init` from the root directory to prepare
+## the simulation environment before running this command.
+.PHONY: car-vcs-sim-build
+car-vcs-sim-build: $(CAR_VCS_DIR)/compile.carfield_soc.sh
+	cd $(CAR_VCS_DIR); bash $<
+
+.PHONY: car-vcs-sim-clean
+## Remove all VCS simulation build artifacts
+car-vcs-sim-clean:
+	rm -rf $(CAR_VCS_DIR)/simv $(CAR_VCS_DIR)/elfloader.so $(CAR_VCS_DIR)/*.daidir $(CAR_VCS_DIR)/*.log $(CAR_VCS_DIR)/csrc $(CAR_VCS_DIR)/*.so
+
+.PHONY: car-vcs-sim-run
+## Run simulation of the carfield RTL with VCS.
+## @param HYP_USER_PRELOAD=0 Whether to preload code in the HyperRAM model.
+## @param CHS_BOOTMODE=0 The bootmode of host domain <0 JTAG|1 Serial Link>
+## @param CHS_PRELMODE=1 If 1, use the serial link for host domain memory preloading, otherwise JTAG.
+## @param CHS_BINARY=<path_to_elf> ELF to be executed on host domain
+## @param CHS_IMAGE=<path_to_memh> Raw image (ROMs) or GPT disk image to be executed on Cheshire (when CHS_BOOTMODE >= 1)
+## @param SECD_BINARY=<path_to_elf> ELF to be executed on the host domain
+## @param SECD_IMAGE=<path_to_memh> Raw image (ROMs) or GPT disk image to be executed on Cheshire (when CHS_BOOTMODE >= 1)
+## @param SECD_BOOTMODE=0 The bootmode of secure domain <0 JTAG|1 Serial Link>
+## @param SAFED_BINARY=<path_to_elf> ELF to be executed on safe domain
+## @param SAFED_BOOTMODE=0 The bootmode of safe domain <0 JTAG|1 Serial Link>
+## @param PULPD_BINARY=<path_to_elf> ELF to be executed on integer PMCA
+## @param PULPD_BOOTMODE=0 The bootmode of safe domain <0 JTAG|1 Serial Link>
+## @param SPATZD_BINARY==<path_to_elf> ELF to be executed on integer PMCA
+## @param SPATZD_BOOTMODE=0 The bootmode of safe domain <0 JTAG|1 Serial Link>
+## @param TESTBENCH=tb_carfield_soc The testbench to use. Defaults to 'tb_carfield_soc'.
+## @param VCS_RUN_FLAGS The flags for the VCS simulation run
+car-vcs-sim-run:
+	$(eval CHS_BINARY_ABS := $(realpath $(CHS_BINARY)))
+	$(eval CHS_IMAGE_ABS := $(realpath $(CHS_IMAGE)))
+	$(eval SECD_BINARY_ABS := $(realpath $(SECD_BINARY)))
+	$(eval SECD_IMAGE_ABS := $(realpath $(SECD_IMAGE)))
+	$(eval SAFED_BINARY_ABS := $(realpath $(SAFED_BINARY)))
+	$(eval PULPD_BINARY_ABS := $(realpath $(PULPD_BINARY)))
+	$(eval SPATZD_BINARY_ABS := $(realpath $(SPATZD_BINARY)))
+	cd $(CAR_VCS_DIR); HYP_USER_PRELOAD=$(HYP_USER_PRELOAD) \
+		SECURE_BOOT=$(SECURE_BOOT) \
+		CHS_BOOTMODE=$(CHS_BOOTMODE) \
+		CHS_PRELMODE=$(CHS_PRELMODE) \
+		CHS_BINARY=$(CHS_BINARY_ABS) \
+		CHS_IMAGE=$(CHS_IMAGE_ABS) \
+		SECD_BINARY=$(SECD_BINARY_ABS) \
+		SECD_BOOTMODE=$(SECD_BOOTMODE) \
+		SECD_IMAGE=$(SECD_IMAGE_ABS) \
+		SAFED_BINARY=$(SAFED_BINARY_ABS) \
+		SAFED_BOOTMODE=$(SAFED_BOOTMODE) \
+		PULPD_BINARY=$(PULPD_BINARY_ABS) \
+		PULPD_BOOTMODE=$(PULPD_BOOTMODE) \
+		SPATZD_BINARY=$(SPATZD_BINARY_ABS) \
+		SPATZD_BOOTMODE=$(SPATZD_BOOTMODE) \
+		VCS_RUN_FLAGS="$(VCS_RUN_FLAGS)" \
+		bash $(CAR_VCS_DIR)/start.carfield_soc.sh
 
 ###########
 # Xcelium #
@@ -144,4 +221,4 @@ CAR_XCELIUM_ALL += $(CAR_XCELIUM_ALL)
 .PHONY: car-sim-init
 
 ## Generate all required VIPs and compilation scripts for all supported simulators
-car-sim-init: car-vsim-sim-init
+car-sim-init: car-vsim-sim-init car-vcs-sim-init
