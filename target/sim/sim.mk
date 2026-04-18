@@ -7,7 +7,7 @@
 ## @section Carfield platform simulation
 
 QUESTA ?= questa-2023.4
-# Version 2020.03-SP2-6
+# Version 2023.12-SP2
 VCS ?= vcs
 TBENCH ?= tb_carfield_soc
 
@@ -130,6 +130,8 @@ car-vsim-sim-run:
 #######
 ## @section VCS simulator target
 
+VLOGAN_ARGS ?= -kdb -nc -assert svaext +v2k -timescale=1ns/1ps
+VLOGAN ?= vlogan
 VCS_FLAGS := -full64 -diag=dvfs
 ifdef DEBUG
 	VCS_COMPILE_FLAGS := $(VCS_FLAGS) -debug_acc +acc
@@ -142,9 +144,9 @@ endif
 .PHONY: $(CAR_VCS_DIR)/compile.carfield_soc.sh
 $(CAR_VCS_DIR)/compile.carfield_soc.sh:
 	mkdir -p $(CAR_VCS_DIR)
-	$(BENDER) script vcs $(common_targs) $(sim_targs) $(common_defs) $(safed_defs) --vlog-arg="$(RUNTIME_DEFINES)" --compilation-mode separate > $@
-	echo 'g++ -std=c++11 -shared -fPIC -o $(CAR_VCS_DIR)/elfloader.so "$(CHS_ROOT)/target/sim/src/elfloader.cpp"' >> $@
-	echo 'vlc -sverilog $(VCS_COMPILE_FLAGS) -top $(TBENCH) -o $(CAR_VCS_DIR)/simv' >> $@
+	$(BENDER) script vcs $(common_targs) $(sim_targs) $(common_defs) $(safed_defs) --vlog-arg="$(VLOGAN_ARGS) $(RUNTIME_DEFINES)" --vlogan-bin="$(VLOGAN)" --compilation-mode separate > $@
+	echo 'g++ -std=c++11 -shared -I $(VCS_HOME)/include -fPIC -o $(CAR_VCS_DIR)/elfloader.so "$(CHS_ROOT)/target/sim/src/elfloader.cpp"' >> $@
+	echo 'vcs -sverilog $(VCS_COMPILE_FLAGS) -top $(TBENCH) -o $(CAR_VCS_DIR)/simv' >> $@
 
 CAR_VCS_ALL += $(CAR_SIM_ALL)
 CAR_VCS_ALL += $(CAR_VCS_DIR)/compile.carfield_soc.sh
@@ -165,6 +167,7 @@ car-vcs-sim-clean:
 	rm -rf $(CAR_VCS_DIR)/simv $(CAR_VCS_DIR)/elfloader.so $(CAR_VCS_DIR)/*.daidir $(CAR_VCS_DIR)/*.log $(CAR_VCS_DIR)/csrc $(CAR_VCS_DIR)/*.so
 
 .PHONY: car-vcs-sim-run
+# e.x. make car-vcs-sim-run CHS_BOOTMODE=0 CHS_PRELMODE=1 CHS_BINARY=./sw/tests/bare-metal/hostd/helloworld.car.l2.elf
 ## Run simulation of the carfield RTL with VCS.
 ## @param HYP_USER_PRELOAD=0 Whether to preload code in the HyperRAM model.
 ## @param CHS_BOOTMODE=0 The bootmode of host domain <0 JTAG|1 Serial Link>
