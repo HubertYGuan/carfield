@@ -108,7 +108,7 @@ packages:
       Git: git@github.com:AlSaqr-platform/can_bus.git
     dependencies: []
   cheshire:
-    revision: 0c95210cf242c384fafe3019e84b8974c3ff1e92
+    revision: ce7b0270e1bbce8bb0fe5b006115bbf03a423670
     version: null
     source:
       Git: https://github.com/pulp-platform/cheshire.git
@@ -205,8 +205,15 @@ packages:
     - common_cells
     - fpnew
     - tech_cells_generic
+  dram_rtl_sim:
+    revision: 2cac4a9e12a60537567276b539ab6c919c87b5dc
+    version: 0.1.1
+    source:
+      Git: https://github.com/pulp-platform/dram_rtl_sim.git
+    dependencies:
+    - axi
   dyn_mem:
-    revision: 480590062742230dc9bd4050358a15b4747bdf34
+    revision: 78d4b4248b3c7b02a0e61d683f658e5094ac8c44
     version: null
     source:
       Git: https://github.com/pulp-platform/dyn_spm.git
@@ -310,8 +317,8 @@ packages:
       Git: https://github.com/pulp-platform/icache-intc.git
     dependencies: []
   idma:
-    revision: ca1b28816a3706be0bf9ce01378246d5346384f0
-    version: 0.5.1
+    revision: e618e4df6d806d3a010aa70d99be735394263eef
+    version: 0.6.5
     source:
       Git: https://github.com/pulp-platform/idma.git
     dependencies:
@@ -481,7 +488,7 @@ packages:
     - common_cells
     - tech_cells_generic
   safety_island:
-    revision: ae2bfaa07c85de34a0f4f334f376f21f6884b77f
+    revision: d9feaedcec1d2fa09fbb57cd1c910fa9a821a0de
     version: null
     source:
       Git: https://github.com/pulp-platform/safety_island.git
@@ -530,7 +537,7 @@ packages:
     - hwpe-stream
     - ibex
   spatz:
-    revision: 180641d80569dc688ad2cd6edefac71c686de4ae
+    revision: 70bc183cc795e600cf368791222757b38a3bef6f
     version: null
     source:
       Git: https://github.com/pulp-platform/spatz.git

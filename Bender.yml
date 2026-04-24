@@ -13,10 +13,10 @@ package:
 dependencies:
   register_interface: { git: https://github.com/pulp-platform/register_interface.git,   version: 0.4.2                                }
   axi:                { git: https://github.com/pulp-platform/axi.git,                  version: 0.39.1                               }
-  cheshire:           { git: https://github.com/pulp-platform/cheshire.git,             rev: 0c95210cf242c384fafe3019e84b8974c3ff1e92 } # branch: aottaviano/carfield
+  cheshire:           { git: https://github.com/pulp-platform/cheshire.git,             rev: ce7b0270e1bbce8bb0fe5b006115bbf03a423670 } # branch: carfield
   hyperbus:           { git: https://github.com/pulp-platform/hyperbus.git,             rev: 841deb9d821b63bf05a1c85d3a4746352a8bcae2 } # branch: aottaviano/nonfree
-  dyn_mem:            { git: https://github.com/pulp-platform/dyn_spm.git,              rev: 480590062742230dc9bd4050358a15b4747bdf34 } # branch: main
-  safety_island:      { git: https://github.com/pulp-platform/safety_island.git,        rev: ae2bfaa07c85de34a0f4f334f376f21f6884b77f } # branch: carfield
+  dyn_mem:            { git: https://github.com/pulp-platform/dyn_spm.git,              rev: 78d4b4248b3c7b02a0e61d683f658e5094ac8c44 } # branch: main
+  safety_island:      { git: https://github.com/pulp-platform/safety_island.git,        rev: d9feaedcec1d2fa09fbb57cd1c910fa9a821a0de } # branch: carfield
   pulp_cluster:       { git: https://github.com/pulp-platform/pulp_cluster.git,         version: 3.0.3                                }
   opentitan:          { git: https://github.com/pulp-platform/opentitan.git,            rev: 48595339c9bea8eddf7cc799bb74e6af5ec5d846 } # branch: carfield-soc
   mailbox_unit:       { git: git@github.com:pulp-platform/mailbox_unit.git,             version: 1.1.0                                }
@@ -24,10 +24,11 @@ dependencies:
   timer_unit:         { git: https://github.com/pulp-platform/timer_unit.git,           version: 1.0.2                                }
   apb_adv_timer:      { git: https://github.com/pulp-platform/apb_adv_timer.git,        version: 1.0.4                                }
   can_bus:            { git: git@github.com:AlSaqr-platform/can_bus.git,                rev: 0ec0bf8b7dab6d5e4b3f7ec58338a8efee066379 } # branch: pulp
-  spatz:              { git: https://github.com/pulp-platform/spatz.git,                rev: 180641d80569dc688ad2cd6edefac71c686de4ae } # branch: main
+  spatz:              { git: https://github.com/pulp-platform/spatz.git,                rev: 70bc183cc795e600cf368791222757b38a3bef6f } # branch: main
   common_cells:       { git: https://github.com/pulp-platform/common_cells.git,         version: 1.31.1                               }
   pulp-ethernet:      { git: https://github.com/pulp-platform/pulp-ethernet.git,        rev: bdc8031ab270a49da28df269266ce9ab9a133636 } # branch: carfield
   riscv-dbg:          { git: https://github.com/pulp-platform/riscv-dbg.git,            version: =0.8.0                               }
+  dram_rtl_sim:       { git: "https://github.com/pulp-platform/dram_rtl_sim.git",       version: 0.1.1  }
 
 workspace:
   package_links:
@@ -129,6 +130,6 @@ sources:
 vendor_package:
   - name: reggen
     target_dir: "utils"
-    upstream: { git: "https://github.com/pulp-platform/register_interface.git", rev: "19163bb5191d2669a8cbc267cdd4ce8e60f20746"}
+    upstream: { git: "https://github.com/pulp-platform/register_interface.git", rev: "d6e1d4cdaab7870f4faf3f88a1c788eaf5ac129d"}
     mapping:
       - { from: 'vendor/lowrisc_opentitan/util', to: 'reggen'}
