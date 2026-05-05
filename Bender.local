@@ -17,5 +17,5 @@ overrides:
   cv32e40p:             { git: "https://github.com/pulp-platform/cv32e40p.git"            , rev: e863f576699815b38cc9d80dbdede8ed5efd5991   }
   axi_rt:               { git: "https://github.com/pulp-platform/axi_rt.git"              , version: =0.0.0-alpha.4                         }
   serial_link:          { git: "https://github.com/pulp-platform/serial_link.git"         , rev: 4024f01b1d67cdf1cf9486467d0f2e2f407aa372   }
-  neureka:              { git: "https://github.com/pulp-platform/neureka.git"             , rev: f6b9a014c7ff4c536865c8ad376b383d4026f286   }
-  softex:               { git: "https://github.com/belanoa/softex.git"                    , rev: a93ddff106ca3596660584ce6c7f77fb2a8475e3   }
+  neureka:              { git: "https://github.com/pulp-platform/neureka.git"             , rev: b2a04aaee3fde1936f75e7395cbb2836ef2b18d9   }
+  softex:               { git: "https://github.com/belanoa/softex.git"                    , rev: 77f219db2d0591afd18c191e5f4c6b112d7aac0c   }

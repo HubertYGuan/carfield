@@ -256,7 +256,7 @@ packages:
     dependencies:
     - common_cells
   hci:
-    revision: aed9005c761827c6cbff2ea9a15f9cc37acd1169
+    revision: caeb7545edc9c971347bbfed99f9f57e7f9a451b
     version: null
     source:
       Git: https://github.com/pulp-platform/hci.git
@@ -287,7 +287,7 @@ packages:
     dependencies:
     - tech_cells_generic
   hwpe-stream:
-    revision: 3bc9694705b72a5b9bddc7fcde5091b9e45ba0c8
+    revision: 35f6bb74b28acc5922262cf0244e7a7c7fe6a589
     version: null
     source:
       Git: https://github.com/pulp-platform/hwpe-stream.git
@@ -358,7 +358,7 @@ packages:
     dependencies:
     - common_cells
   neureka:
-    revision: f6b9a014c7ff4c536865c8ad376b383d4026f286
+    revision: b2a04aaee3fde1936f75e7395cbb2836ef2b18d9
     version: null
     source:
       Git: https://github.com/pulp-platform/neureka.git
@@ -416,7 +416,7 @@ packages:
     - axi
     - common_verification
   pulp_cluster:
-    revision: 579905eacb7c4b94be91a4e0cb76697acb62b1c3
+    revision: caaa9735346bee71b51d1fe6ba526743bc41e135
     version: 3.0.3
     source:
       Git: https://github.com/pulp-platform/pulp_cluster.git
@@ -446,7 +446,7 @@ packages:
     - tech_cells_generic
     - timer_unit
   redmule:
-    revision: 9223ccc932e21d0667e9c2d30831db41eec9299e
+    revision: 51cd0647fac7d2ccf6aea955255a0021bfb1b056
     version: null
     source:
       Git: https://github.com/pulp-platform/redmule.git
@@ -525,7 +525,7 @@ packages:
     - common_cells
     - register_interface
   softex:
-    revision: a93ddff106ca3596660584ce6c7f77fb2a8475e3
+    revision: 77f219db2d0591afd18c191e5f4c6b112d7aac0c
     version: null
     source:
       Git: https://github.com/belanoa/softex.git

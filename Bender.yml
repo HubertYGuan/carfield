@@ -17,7 +17,7 @@ dependencies:
   hyperbus:           { git: https://github.com/pulp-platform/hyperbus.git,             rev: 841deb9d821b63bf05a1c85d3a4746352a8bcae2 } # branch: aottaviano/nonfree
   dyn_mem:            { git: https://github.com/pulp-platform/dyn_spm.git,              rev: 78d4b4248b3c7b02a0e61d683f658e5094ac8c44 } # branch: main
   safety_island:      { git: https://github.com/pulp-platform/safety_island.git,        rev: d9feaedcec1d2fa09fbb57cd1c910fa9a821a0de } # branch: carfield
-  pulp_cluster:       { git: https://github.com/pulp-platform/pulp_cluster.git,         version: 3.0.3                                }
+  pulp_cluster:       { git: https://github.com/pulp-platform/pulp_cluster.git,         rev: caaa9735346bee71b51d1fe6ba526743bc41e135 }
   opentitan:          { git: https://github.com/pulp-platform/opentitan.git,            rev: 48595339c9bea8eddf7cc799bb74e6af5ec5d846 } # branch: carfield-soc
   mailbox_unit:       { git: git@github.com:pulp-platform/mailbox_unit.git,             version: 1.1.0                                }
   apb:                { git: https://github.com/pulp-platform/apb.git,                  version: 0.2.3                                }
