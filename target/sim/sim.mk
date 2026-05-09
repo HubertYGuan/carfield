@@ -130,7 +130,8 @@ car-vsim-sim-run:
 #######
 ## @section VCS simulator target
 
-VLOGAN_ARGS ?= -kdb -nc -assert svaext -assert disable_cover  +v2k -timescale=1ns/1ps -ntb_opts uvm -work WORK
+VLOGAN_ARGS ?= "-kdb -nc -assert svaext -assert disable_cover +v2k -timescale=1ns/1ps"
+VLOGAN_ARGS += -ntb_opts uvm
 VLOGAN ?= vlogan
 
 VCS_FLAGS := -full64 -diag=dvfs
@@ -145,7 +146,8 @@ endif
 .PHONY: $(CAR_VCS_DIR)/compile.carfield_soc.sh
 $(CAR_VCS_DIR)/compile.carfield_soc.sh:
 	mkdir -p $(CAR_VCS_DIR)
-	$(BENDER) script vcs $(common_targs) $(sim_targs) $(common_defs) $(safed_defs) --vlog-arg="$(VLOGAN_ARGS) $(RUNTIME_DEFINES)" --vlogan-bin="$(VLOGAN)" --compilation-mode separate > $@
+	printf 'vlogan -ntb_opts uvm-1.2 -full64 -work UVM_LIB -sverilog\n' > $@
+	$(BENDER) script vcs $(common_targs) $(sim_targs) $(common_defs) $(safed_defs) --vlog-arg="$(VLOGAN_ARGS) $(RUNTIME_DEFINES)" --vlogan-bin="$(VLOGAN)" --compilation-mode separate >> $@
 	echo 'g++ -std=c++11 -shared -I $(VCS_HOME)/include -fPIC -o $(CAR_VCS_DIR)/elfloader.so "$(CHS_ROOT)/target/sim/src/elfloader.cpp"' >> $@
 	echo 'vcs -sverilog $(VCS_COMPILE_FLAGS) -top $(TBENCH) -o $(CAR_VCS_DIR)/simv' >> $@
 
