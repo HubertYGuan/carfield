@@ -131,7 +131,7 @@ car-vsim-sim-run:
 ## @section VCS simulator target
 
 VLOGAN_ARGS ?= "-kdb -nc -assert svaext -assert disable_cover +v2k -timescale=1ns/1ps"
-VLOGAN_ARGS += -ntb_opts uvm
+VLOGAN_ARGS += -ntb_opts uvm-1.2
 VLOGAN ?= vlogan
 
 VCS_FLAGS := -full64 -diag=dvfs
