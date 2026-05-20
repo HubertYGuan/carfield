@@ -591,9 +591,9 @@ typedef struct packed {
 // Cheshire configuration
 localparam cheshire_cfg_t CheshireCfg = '{
   // CVA6 parameters
-  Cva6RASDepth      : ariane_pkg::ArianeDefaultConfig.RASDepth,
-  Cva6BTBEntries    : ariane_pkg::ArianeDefaultConfig.BTBEntries,
-  Cva6BHTEntries    : ariane_pkg::ArianeDefaultConfig.BHTEntries,
+  Cva6RASDepth      : cva6_config_pkg::CVA6ConfigRASDepth,
+  Cva6BTBEntries    : cva6_config_pkg::CVA6ConfigBTBEntries,
+  Cva6BHTEntries    : cva6_config_pkg::CVA6ConfigBHTEntries,
   Cva6NrPMPEntries  : 0,
   Cva6ExtCieLength  : 'h1000_0000, // [0x2000_0000, 0x7000_0000) is non-CIE,
                                    // [0x7000_0000, 0x8000_0000) is CIE
