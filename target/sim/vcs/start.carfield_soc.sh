@@ -10,7 +10,7 @@
 #
 # Hubert Guan <hguan@ucsb.edu> (adapted from start.cheshire_soc.sh from Cyril Koenig <cykoenig@iis.ee.ethz.ch>)
 
-TESTBENCH=tb_cheshire_soc
+TESTBENCH=tb_carfield_soc
 
 # Set full path to c++ compiler.
 if [ -z "${CXX_PATH}" ]; then

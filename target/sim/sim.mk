@@ -148,9 +148,6 @@ $(CAR_VCS_DIR)/compile.carfield_soc.sh:
 	mkdir -p $(CAR_VCS_DIR)
 	printf 'vlogan -ntb_opts uvm-1.2 -full64 -work UVM_LIB -sverilog\n' > $@
 	$(BENDER) script vcs $(common_targs) $(sim_targs) $(common_defs) $(safed_defs) --vlog-arg="$(VLOGAN_ARGS) $(RUNTIME_DEFINES)" --vlogan-bin="$(VLOGAN)" --compilation-mode separate >> $@
-	echo 'g++ -std=c++11 -shared -I $(VCS_HOME)/include -fPIC -o $(CAR_VCS_DIR)/elfloader.so "$(CHS_ROOT)/target/sim/src/elfloader.cpp"' >> $@
-	echo 'vcs -sverilog $(VCS_COMPILE_FLAGS) -top $(TBENCH) -o $(CAR_VCS_DIR)/simv' >> $@
-
 CAR_VCS_ALL += $(CAR_SIM_ALL)
 CAR_VCS_ALL += $(CAR_VCS_DIR)/compile.carfield_soc.sh
 
