@@ -610,11 +610,6 @@ localparam cheshire_cfg_t CheshireCfg = '{
   NumExtOutIntrTgts : CarfieldNumRouterTargets,
   NumExtOutIntrs    : CarfieldNumExtIntrs+$bits(cheshire_int_intr_t),
   ClicIntCtlBits    : 8,
-  ClicUseSMode      : 1,
-  ClicUseUMode      : 0,
-  ClicUseVsMode     : 1,
-  ClicUseVsModePrio : 1,
-  ClicNumVsCtxts    : 2, // TODO: choose appropriately
   NumExtIntrSyncs   : SyncStages,
   // Interconnect
   AddrWidth         : 48,

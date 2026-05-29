@@ -16,7 +16,7 @@ module cheshire_wrap
   import cheshire_pkg::*;
 #(
   parameter cheshire_cfg_t Cfg = '0,
-  parameter dm::hartinfo_t [cheshire_pkg::iomsb(Cfg.NumExtDbgHarts)-1:0] ExtHartinfo = '0,
+  parameter dm::hartinfo_t [31:0] ExtHartinfo = '0,
   parameter int unsigned NumExtIntrs            = 32,
   parameter type cheshire_axi_ext_llc_ar_chan_t = logic,
   parameter type cheshire_axi_ext_llc_aw_chan_t = logic,

@@ -5,7 +5,7 @@ set -e
 
 ROOT="$HOME/carfield"
 
-vlogan -ntb_opts uvm-1.2 -full64 -work UVM_LIB -sverilog
+vlogan -kdb -ntb_opts uvm-1.2 -full64 -work UVM_LIB -sverilog
 
 vlogan -sverilog \
     -full64 \
