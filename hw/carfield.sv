@@ -340,6 +340,17 @@ typedef logic [(CheshireCfg.AxiDataWidth)/8-1:0] car_strb_t;
 typedef logic [    CheshireCfg.AxiUserWidth-1:0] car_usr_t;
 typedef logic [       AxiSlvIdWidth-1:0] car_slv_id_t;
 
+// Narrow AXI types (D32, A48 and D32, A32)
+// verilog_lint: waive-start line-length
+`AXI_TYPEDEF_ALL_CT(carfield_axi_d32_a48_slv, carfield_axi_d32_a48_slv_req_t, carfield_axi_d32_a48_slv_rsp_t, car_addrw_t, car_slv_id_t, car_nar_dataw_t, car_nar_strb_t, car_usr_t)
+`AXI_TYPEDEF_ALL_CT(carfield_axi_d32_a32_slv, carfield_axi_d32_a32_slv_req_t, carfield_axi_d32_a32_slv_rsp_t, car_nar_addrw_t, car_slv_id_t, car_nar_dataw_t, car_nar_strb_t, car_usr_t)
+`AXI_LITE_TYPEDEF_ALL_CT(carfield_axi_lite_d32_a32, carfield_axi_lite_d32_a32_slv_req_t, carfield_axi_lite_d32_a32_slv_rsp_t, car_nar_addrw_t, car_nar_dataw_t, car_nar_strb_t)
+// verilog_lint: waive-stop line-length
+
+// APB req/rsp
+`APB_TYPEDEF_REQ_T(carfield_apb_req_t, car_nar_addrw_t, car_nar_dataw_t, car_nar_strb_t)
+`APB_TYPEDEF_RESP_T(carfield_apb_rsp_t, car_nar_dataw_t)
+
 // Slave CDC parameters
 localparam int unsigned CarfieldAxiSlvAwWidth =
                         (2**LogDepth)*axi_pkg::aw_width(CheshireCfg.AddrWidth   ,
@@ -2125,9 +2136,6 @@ if (CarfieldIslandsCfg.periph.enable) begin: gen_periph // Handle with care...
   );
 
   // Convert to d32 a48
-  // verilog_lint: waive-start line-length
-  `AXI_TYPEDEF_ALL_CT(carfield_axi_d32_a48_slv, carfield_axi_d32_a48_slv_req_t, carfield_axi_d32_a48_slv_rsp_t, car_addrw_t, car_slv_id_t, car_nar_dataw_t, car_nar_strb_t, car_usr_t)
-  // verilog_lint: waive-stop line-length
 
   carfield_axi_d32_a48_slv_req_t axi_d32_a48_peripherals_req;
   carfield_axi_d32_a48_slv_rsp_t axi_d32_a48_peripherals_rsp;
@@ -2158,9 +2166,6 @@ if (CarfieldIslandsCfg.periph.enable) begin: gen_periph // Handle with care...
   );
 
   // Convert to d32_a32
-  // verilog_lint: waive-start line-length
-  `AXI_TYPEDEF_ALL_CT(carfield_axi_d32_a32_slv, carfield_axi_d32_a32_slv_req_t, carfield_axi_d32_a32_slv_rsp_t, car_nar_addrw_t, car_slv_id_t, car_nar_dataw_t, car_nar_strb_t, car_usr_t)
-  // verilog_lint: waive-stop line-length
 
   carfield_axi_d32_a32_slv_req_t axi_d32_a32_peripherals_req;
   carfield_axi_d32_a32_slv_rsp_t axi_d32_a32_peripherals_rsp;
@@ -2180,9 +2185,6 @@ if (CarfieldIslandsCfg.periph.enable) begin: gen_periph // Handle with care...
   );
 
   // AXI to AXI lite conversion
-  // verilog_lint: waive-start line-length
-  `AXI_LITE_TYPEDEF_ALL_CT(carfield_axi_lite_d32_a32, carfield_axi_lite_d32_a32_slv_req_t, carfield_axi_lite_d32_a32_slv_rsp_t, car_nar_addrw_t, car_nar_dataw_t, car_nar_strb_t)
-  // verilog_lint: waive-stop line-length
 
   carfield_axi_lite_d32_a32_slv_req_t axi_lite_d32_a32_peripherals_req;
   carfield_axi_lite_d32_a32_slv_rsp_t axi_lite_d32_a32_peripherals_rsp;
@@ -2208,10 +2210,6 @@ if (CarfieldIslandsCfg.periph.enable) begin: gen_periph // Handle with care...
     .mst_req_o ( axi_lite_d32_a32_peripherals_req ),
     .mst_resp_i( axi_lite_d32_a32_peripherals_rsp )
   );
-
-  // APB req/rsp
-  `APB_TYPEDEF_REQ_T(carfield_apb_req_t, car_nar_addrw_t, car_nar_dataw_t, car_nar_strb_t)
-  `APB_TYPEDEF_RESP_T(carfield_apb_rsp_t, car_nar_dataw_t)
 
   // APB masters
   carfield_apb_req_t [NumApbMst-1:0] apb_mst_req;
