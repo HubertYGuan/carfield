@@ -594,129 +594,186 @@ localparam cheshire_cfg_t CheshireCfg = '{
   Cva6RASDepth      : cva6_config_pkg::CVA6ConfigRASDepth,
   Cva6BTBEntries    : cva6_config_pkg::CVA6ConfigBTBEntries,
   Cva6BHTEntries    : cva6_config_pkg::CVA6ConfigBHTEntries,
-  Cva6NrPMPEntries  : 0,
-  Cva6ExtCieLength  : 'h1000_0000, // [0x2000_0000, 0x7000_0000) is non-CIE,
-                                   // [0x7000_0000, 0x8000_0000) is CIE
-  Cva6ExtCieOnTop   : 1,
+  Cva6NrPMPEntries            : 0,
+  Cva6ExtCieLength            : 'h1000_0000, // [0x2000_0000, 0x7000_0000) is non-CIE,
+                                             // [0x7000_0000, 0x8000_0000) is CIE
+  Cva6ExtCieOnTop             : 1,
+  Cva6NrScoreboardEntries     : cva6_config_pkg::CVA6ConfigNrScoreboardEntries,
+  Cva6MaxOutstandingStores    : cva6_config_pkg::CVA6ConfigMaxOutstandingStores,
+  Cva6IcacheByteSize          : cva6_config_pkg::CVA6ConfigIcacheByteSize,
+  Cva6IcacheSetAssoc          : cva6_config_pkg::CVA6ConfigIcacheSetAssoc,
+  Cva6IcacheLineWidth         : cva6_config_pkg::CVA6ConfigIcacheLineWidth,
+  Cva6DCacheType              : cva6_config_pkg::CVA6ConfigDcacheType,
+  Cva6DcacheByteSize          : cva6_config_pkg::CVA6ConfigDcacheByteSize,
+  Cva6DcacheSetAssoc          : cva6_config_pkg::CVA6ConfigDcacheSetAssoc,
+  Cva6DcacheLineWidth         : cva6_config_pkg::CVA6ConfigDcacheLineWidth,
+  Cva6DcacheFlushOnFence      : cva6_config_pkg::CVA6ConfigDcacheFlushOnFence,
+  Cva6DcacheInvalidateOnFlush : cva6_config_pkg::CVA6ConfigDcacheInvalidateOnFlush,
+  Cva6InstrTlbEntries         : cva6_config_pkg::CVA6ConfigInstrTlbEntries,
+  Cva6DataTlbEntries          : cva6_config_pkg::CVA6ConfigDataTlbEntries,
+  Cva6LockableTlbWays         : cva6_config_pkg::CVA6ConfigLockableTlbWays,
+  Cva6NumTlbColors            : cva6_config_pkg::CVA6ConfigNumTlbColors,
+  Cva6UseSharedTlb            : cva6_config_pkg::CVA6ConfigUseSharedTlb,
+  Cva6SharedTlbDepth          : cva6_config_pkg::CVA6ConfigSharedTlbDepth,
+  Cva6NrLoadPipeRegs          : cva6_config_pkg::CVA6ConfigNrLoadPipeRegs,
+  Cva6NrStorePipeRegs         : cva6_config_pkg::CVA6ConfigNrStorePipeRegs,
+  Cva6DcacheIdWidth           : cva6_config_pkg::CVA6ConfigDcacheIdWidth,
+  Cva6SuperscalarEn           : cva6_config_pkg::CVA6ConfigSuperscalarEn,
+
   // Harts
-  NumCores          : 2,
-  CoreMaxTxns       : 8,
-  CoreMaxTxnsPerId  : 4,
-  CoreUserAmoOffs   : 0, // Convention: lower AMO bits for cores, MSB for serial link
+  NumCores                    : 2,
+  NumExtIrqHarts              : CarfieldNumInterruptibleHarts,
+  NumExtDbgHarts              : 1, // 0 breaks things
+  CoreUserAmoOffs             : 0, // Convention: lower AMO bits for cores, MSB for serial link
+  CoreMaxTxns                 : 8,
+  CoreMaxTxnsPerId            : 4,
+
   // Interrupt parameters
-  NumExtIrqHarts    : CarfieldNumInterruptibleHarts,
-  NumExtInIntrs     : CarfieldNumExtIntrs,
-  NumExtClicIntrs   : CarfieldNumExtIntrs,
-  NumExtOutIntrTgts : CarfieldNumRouterTargets,
-  NumExtOutIntrs    : CarfieldNumExtIntrs+$bits(cheshire_int_intr_t),
-  ClicIntCtlBits    : 8,
-  NumExtIntrSyncs   : SyncStages,
+  NumExtInIntrs               : CarfieldNumExtIntrs,
+  NumExtClicIntrs             : CarfieldNumExtIntrs,
+  NumExtOutIntrTgts           : CarfieldNumRouterTargets,
+  NumExtOutIntrs              : CarfieldNumExtIntrs+$bits(cheshire_int_intr_t),
+  ClicIntCtlBits              : 8,
+  NumExtIntrSyncs             : SyncStages,
+
   // Interconnect
-  AddrWidth         : 48,
-  AxiDataWidth      : 64,
-  AxiUserWidth      : 10,  // {CACHE_PARTITIONING(5[9:5]), ECC_ERROR(1[4:4]), ATOPS(4[3:0])}
-  AxiMstIdWidth     : 2,
-  AxiMaxMstTrans    : 64,
-  AxiMaxSlvTrans    : 64,
-  AxiUserAmoMsb     : 3, // A0:0001, A1:0011, SF:0101, FP:0111, SL:1XXX, none: '0
-  AxiUserAmoLsb     : 0, // A0:0001, A1:0011, SF:0101, FP:0111, SL:1XXX, none: '0
-  AxiUserErrBits    : 1,
-  AxiUserErrLsb     : 4,
-  RegMaxReadTxns    : 8,
-  RegMaxWriteTxns   : 8,
-  RegAmoNumCuts     : 1,
-  RegAmoPostCut     : 1,
+  AddrWidth                   : 48,
+  AxiDataWidth                : 64,
+  AxiUserWidth                : 10,  // {CACHE_PARTITIONING(5[9:5]), ECC_ERROR(1[4:4]), ATOPS(4[3:0])}
+  AxiMstIdWidth               : 2,
+  AxiMaxMstTrans              : 64,
+  AxiMaxSlvTrans              : 64,
+  AxiUserAmoMsb               : 3, // A0:0001, A1:0011, SF:0101, FP:0111, SL:1XXX, none: '0
+  AxiUserAmoLsb               : 0, // A0:0001, A1:0011, SF:0101, FP:0111, SL:1XXX, none: '0
+  AxiUserErrBits              : 1,
+  AxiUserErrLsb               : 4,
+  AxiUserDefault              : cheshire_pkg::DefaultCfg.AxiUserDefault,
+
+  // Reg parameters
+  RegMaxReadTxns              : 8,
+  RegMaxWriteTxns             : 8,
+  RegAmoNumCuts               : 1,
+  RegAmoPostCut               : 1,
+  RegAdaptMemCut              : cheshire_pkg::DefaultCfg.RegAdaptMemCut,
+
   // External AXI ports (at most 8 ports and rules)
-  AxiExtNumMst      : CarfieldAxiNumMasters,
-  AxiExtNumSlv      : CarfieldAxiNumSlaves,
-  AxiExtNumRules    : CarfieldAxiNumSlaves,
+  AxiExtNumMst                : CarfieldAxiNumMasters,
+  AxiExtNumSlv                : CarfieldAxiNumSlaves,
+  AxiExtNumRules              : CarfieldAxiNumSlaves,
   // External AXI region map
-  AxiExtRegionIdx   : CarfieldAxiMap.AxiIdx,
-  AxiExtRegionStart : CarfieldAxiMap.AxiStart,
-  AxiExtRegionEnd   : CarfieldAxiMap.AxiEnd,
+  AxiExtRegionIdx             : CarfieldAxiMap.AxiIdx,
+  AxiExtRegionStart           : CarfieldAxiMap.AxiStart,
+  AxiExtRegionEnd             : CarfieldAxiMap.AxiEnd,
+
   // External reg slaves (at most 8 ports and rules)
-  RegExtNumSlv      : NumTotalRegSlv,
-  RegExtNumRules    : NumTotalRegSlv,
-  // For carfield, PllIdx is the first index of the async reg interfaces. Please add async reg
-  // interfaces indices to the left of PllIdx, and sync reg interface indices to its right.
-  RegExtRegionIdx   : CarfieldRegBusMap.RegBusIdx,
-  RegExtRegionStart : CarfieldRegBusMap.RegBusStart,
-  RegExtRegionEnd   : CarfieldRegBusMap.RegBusEnd,
+  RegExtNumSlv                : NumTotalRegSlv,
+  RegExtNumRules              : NumTotalRegSlv,
+  RegExtRegionIdx             : CarfieldRegBusMap.RegBusIdx,
+  RegExtRegionStart           : CarfieldRegBusMap.RegBusStart,
+  RegExtRegionEnd             : CarfieldRegBusMap.RegBusEnd,
+
   // RTC
-  RtcFreq           : 1000000,
+  RtcFreq                     : 1000000,
+  
+  // Platform ROM address definition (New structural position)
+  PlatformRom                 : cheshire_pkg::DefaultCfg.PlatformRom,
+
   // Features
-  Bootrom           : 1,
-  Uart              : 1,
-  I2c               : 1,
-  SpiHost           : 1,
-  Gpio              : 1,
-  Dma               : 1,
-  SerialLink        : 1,
-  Vga               : 0,
-  AxiRt             : 1,
-  Clic              : 1,
-  IrqRouter         : 1,
-  BusErr            : 1,
+  Bootrom                     : 1,
+  Uart                        : 1,
+  I2c                         : 0,
+  SpiHost                     : 1,
+  Gpio                        : 1,
+  Dma                         : 1,
+  SerialLink                  : 1,
+  Vga                         : 0,
+  Usb                         : cheshire_pkg::DefaultCfg.Usb, // Added structural requirement
+  AxiRt                       : 0,
+  Clic                        : 1,
+  IrqRouter                   : 1,
+  BusErr                      : 1,
+
   // Debug
-  DbgIdCode         : '{
+  DbgIdCode                   : '{
     version: 4'h1,
     part_num: 16'hca70,
     manufacturer: JtagPulpManufacturer,
     _one: 1
   },
-  DbgMaxReqs        : 4,
-  DbgMaxReadTxns    : 4,
-  DbgMaxWriteTxns   : 4,
-  DbgAmoNumCuts     : 1,
-  DbgAmoPostCut     : 1,
+  DbgMaxReqs                  : 4,
+  DbgMaxReadTxns              : 4,
+  DbgMaxWriteTxns             : 4,
+  DbgAmoNumCuts               : 1,
+  DbgAmoPostCut               : 1,
+
   // LLC: 128 KiB, up to 2 GiB DRAM
-  LlcNotBypass      : 1,
-  LlcSetAssoc       : 8,
-  LlcNumLines       : 256,
-  LlcNumBlocks      : 8,
-  LlcMaxReadTxns    : 32,
-  LlcMaxWriteTxns   : 32,
-  LlcAmoNumCuts     : 1,
-  LlcAmoPostCut     : 1,
-  LlcOutConnect     : 1,
-  LlcOutRegionStart : 'h8000_0000,
-  LlcOutRegionEnd   : 'h1_0000_0000,
-  LlcUserMsb        : 9,
-  LlcUserLsb        : 5,
-  LlcCachePartition : 1,
-  LlcMaxPartition   : 16,
-  LlcRemapHash      : axi_llc_pkg::Modulo,
+  LlcNotBypass                : 1,
+  LlcSetAssoc                 : 8,
+  LlcNumLines                 : 256,
+  LlcNumBlocks                : 8,
+  LlcMaxReadTxns              : 32,
+  LlcMaxWriteTxns             : 32,
+  LlcAmoNumCuts               : 1,
+  LlcAmoPostCut               : 1,
+  LlcOutConnect               : 1,
+  LlcOutRegionStart           : 'h8000_0000,
+  LlcOutRegionEnd             : 'h1_0000_0000,
+  LlcUserMsb                  : 9,
+  LlcUserLsb                  : 5,
+  LlcCachePartition           : 1,
+  LlcMaxPartition             : 16,
+  LlcRemapHash                : axi_llc_pkg::Modulo,
+
   // VGA: RGB332; carfield doesn't have a vga, but widths are required for top-level pins anyway.
-  VgaRedWidth       : 3,
-  VgaGreenWidth     : 3,
-  VgaBlueWidth      : 2,
+  VgaRedWidth                 : 3,
+  VgaGreenWidth               : 3,
+  VgaBlueWidth                : 2,
+  VgaHCountWidth              : cheshire_pkg::DefaultCfg.VgaHCountWidth,
+  VgaVCountWidth              : cheshire_pkg::DefaultCfg.VgaVCountWidth,
+  VgaBufferDepth              : cheshire_pkg::DefaultCfg.VgaBufferDepth,
+  VgaMaxReadTxns              : cheshire_pkg::DefaultCfg.VgaMaxReadTxns,
+
   // Serial Link: map other chip's lower 32bit to 'h1_000_0000
-  SlinkMaxTxnsPerId : 4,
-  SlinkMaxUniqIds   : 4,
-  SlinkMaxClkDiv    : 1024,
-  SlinkRegionStart  : 'h1_0000_0000,
-  SlinkRegionEnd    : 'h2_0000_0000,
-  SlinkTxAddrMask   : 'hFFFF_FFFF,
-  SlinkTxAddrDomain : 'h0000_0000,
-  SlinkUserAmoBit   : 3,  // Convention: lower AMO bits for cores, MSB for serial link
+  SlinkMaxTxnsPerId           : 4,
+  SlinkMaxUniqIds             : 4,
+  SlinkMaxClkDiv              : 1024,
+  SlinkRegionStart            : 'h1_0000_0000,
+  SlinkRegionEnd              : 'h2_0000_0000,
+  SlinkTxAddrMask             : 'hFFFF_FFFF,
+  SlinkTxAddrDomain           : 'h0000_0000,
+  SlinkUserAmoBit             : 3,  // Convention: lower AMO bits for cores, MSB for serial link
+
+  // Parameters for USB subsystem configuration
+  UsbDmaMaxReads              : cheshire_pkg::DefaultCfg.UsbDmaMaxReads,
+  UsbAddrMask                 : cheshire_pkg::DefaultCfg.UsbAddrMask,
+  UsbAddrDomain               : cheshire_pkg::DefaultCfg.UsbAddrDomain,
+
   // DMA config
-  DmaConfMaxReadTxns  : 4,
-  DmaConfMaxWriteTxns : 4,
-  DmaConfAmoNumCuts   : 1,
-  DmaNumAxInFlight    : 24,
-  DmaMemSysDepth      : 16,
-  DmaJobFifoDepth     : 4,
-  DmaRAWCouplingAvail : 1,
-  DmaConfAmoPostCut   : 1,
-  DmaConfEnableTwoD   : 1,
+  DmaConfMaxReadTxns          : 4,
+  DmaConfMaxWriteTxns         : 4,
+  DmaConfAmoNumCuts           : 1,
+  DmaNumAxInFlight            : 24,
+  DmaMemSysDepth              : 16,
+  DmaJobFifoDepth             : 4,
+  DmaRAWCouplingAvail         : 1,
+  DmaConfAmoPostCut           : 1,
+  DmaConfEnableTwoD           : 1,
+
   // GPIOs
-  GpioInputSyncs      : 1,
+  GpioInputSyncs              : 1,
+
   // AXI RT
-  AxiRtNumPending     : 32,
-  AxiRtWBufferDepth   : 32,
-  AxiRtNumAddrRegions : 2,
-  AxiRtCutPaths       : 1,
-  AxiRtEnableChecks   : 0,
+  AxiRtNumPending             : 32,
+  AxiRtWBufferDepth           : 32,
+  AxiRtNumAddrRegions         : 2,
+  AxiRtCutPaths               : 1,
+  AxiRtEnableChecks           : 0,
+
+  ClicVsclic                  : 1,
+  ClicVsprio                  : 1,
+  ClicNumVsctxts              : 4,
+  ClicPrioWidth               : 1,
+
   // All non-set values should be zero
   default: '0
 };
