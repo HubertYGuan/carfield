@@ -7,8 +7,8 @@
 // Alessandro Ottaviano <aottaviano@ii.ee.ethz.ch>
 
 `include "cheshire/typedef.svh"
- `include "axi/typedef.svh"
- `include "axi/assign.svh"
+`include "axi/typedef.svh"
+`include "axi/assign.svh"
 
 module cheshire_wrap
   import axi_pkg::*;
@@ -41,6 +41,7 @@ module cheshire_wrap
   parameter type cheshire_axi_ext_slv_rsp_t     = logic,
   parameter type cheshire_reg_ext_req_t         = logic,
   parameter type cheshire_reg_ext_rsp_t         = logic,
+  parameter type impl_in_t                      = logic, 
   parameter int unsigned LogDepth = 3,
   parameter int unsigned CdcSyncStages = 2,
   // External Slaves Parameters
@@ -240,7 +241,17 @@ module cheshire_wrap
   output logic                         vga_vsync_o,
   output logic [Cfg.VgaRedWidth  -1:0] vga_red_o,
   output logic [Cfg.VgaGreenWidth-1:0] vga_green_o,
-  output logic [Cfg.VgaBlueWidth -1:0] vga_blue_o
+  output logic [Cfg.VgaBlueWidth -1:0] vga_blue_o,
+  input  logic                   usb_clk_i,
+  input  logic                   usb_rst_ni,
+  input  logic [UsbNumPorts-1:0] usb_dm_i,
+  output logic [UsbNumPorts-1:0] usb_dm_o,
+  output logic [UsbNumPorts-1:0] usb_dm_oe_o,
+  input  logic [UsbNumPorts-1:0] usb_dp_i,
+  output logic [UsbNumPorts-1:0] usb_dp_o,
+  output logic [UsbNumPorts-1:0] usb_dp_oe_o,
+  input  impl_in_t [Cfg.Cva6IcacheSetAssoc+Cfg.Cva6DcacheSetAssoc:0] cva6_sram_impl_i,
+  input  impl_in_t [2*Cfg.LlcSetAssoc-1:0] llc_sram_impl_i
 );
 
 // All AXI slave buses
@@ -281,7 +292,8 @@ cheshire_soc #(
   .axi_ext_slv_req_t ( cheshire_axi_ext_slv_req_t ),
   .axi_ext_slv_rsp_t ( cheshire_axi_ext_slv_rsp_t ),
   .reg_ext_req_t     ( cheshire_reg_ext_req_t     ),
-  .reg_ext_rsp_t     ( cheshire_reg_ext_rsp_t     )
+  .reg_ext_rsp_t     ( cheshire_reg_ext_rsp_t     ),
+  .impl_in_t         ( impl_in_t                  ) 
 ) i_cheshire_soc     (
   .clk_i      ,
   .rst_ni     ,
@@ -356,7 +368,17 @@ cheshire_soc #(
   .vga_vsync_o,
   .vga_red_o  ,
   .vga_green_o,
-  .vga_blue_o
+  .vga_blue_o ,
+  .usb_clk_i,
+  .usb_rst_ni,
+  .usb_dm_i,
+  .usb_dm_o,
+  .usb_dm_oe_o,
+  .usb_dp_i,
+  .usb_dp_o,
+  .usb_dp_oe_o,
+  .cva6_sram_impl_i,
+  .llc_sram_impl_i
 );
 
 // Cheshire's AXI master cdc generation, except for the Integer Cluster (slave 6) and the Mailbox

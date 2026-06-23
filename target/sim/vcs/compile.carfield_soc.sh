@@ -634,6 +634,7 @@ vlogan -sverilog \
     "+incdir+$ROOT/.bender/git/checkouts/axi-218ece9b30b7949c/include" \
     "+incdir+$ROOT/.bender/git/checkouts/common_cells-3885ac54f8de1bd3/include" \
     "$ROOT/.bender/git/checkouts/axi-218ece9b30b7949c/src/axi_pkg.sv" \
+    "$ROOT/.bender/git/checkouts/axi-218ece9b30b7949c/src/axi_demux_id_counters.sv" \
     "$ROOT/.bender/git/checkouts/axi-218ece9b30b7949c/src/axi_intf.sv" \
     "$ROOT/.bender/git/checkouts/axi-218ece9b30b7949c/src/axi_atop_filter.sv" \
     "$ROOT/.bender/git/checkouts/axi-218ece9b30b7949c/src/axi_burst_splitter_gran.sv" \
@@ -2527,6 +2528,7 @@ vlogan -sverilog \
     "+define+CLUSTER_ALIAS" \
     "+incdir+$ROOT/.bender/git/checkouts/common_cells-3885ac54f8de1bd3/include" \
     "+incdir+$ROOT/.bender/git/checkouts/register_interface-2fa61c05f1d73e9d/include" \
+    "$ROOT/.bender/git/checkouts/clic-1933e354a4728722/src/clic_pkg.sv" \
     "$ROOT/.bender/git/checkouts/clic-1933e354a4728722/src/clicint_reg_pkg.sv" \
     "$ROOT/.bender/git/checkouts/clic-1933e354a4728722/src/clicint_reg_top.sv" \
     "$ROOT/.bender/git/checkouts/clic-1933e354a4728722/src/clicintv_reg_pkg.sv" \

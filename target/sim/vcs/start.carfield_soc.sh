@@ -49,7 +49,7 @@ pargs=""
 [[ -n "$SPATZD_BINARY" ]] && pargs="${pargs}+SPATZD_BINARY=${SPATZD_BINARY} "
 [[ -n "$CHS_IMAGE" ]] && pargs="${pargs}+CHS_IMAGE=${CHS_IMAGE} "
 
-flags+=" -full64 -kdb "
+flags+=" -full64 -kdb -ntb_opts uvm-1.2 "
 # Set default to fast simulation flags.
 if [ -z "${VCSARGS}" ]; then
     # Use -debug_access+all for waveform debugging
@@ -73,7 +73,7 @@ fi
 COLOR_NC='\e[0m'
 COLOR_BLUE='\e[0;34m'
 
-${VCS_BIN} ${flags} ../src/elfloader.cpp ${TESTBENCH} | tee elaborate.log
+${VCS_BIN} ${flags} ${TESTBENCH} | tee elaborate.log
 
 # Start simulation
 printf ${COLOR_BLUE}"${VCS_VERSION} ${VERDI_VERSION} ./simv ${pargs}"${COLOR_NC}"\n"
