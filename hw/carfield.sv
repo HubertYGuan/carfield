@@ -911,7 +911,19 @@ cheshire i_cheshire_wrap                 (
   .vga_vsync_o (                 ),
   .vga_red_o   (                 ),
   .vga_green_o (                 ),
-  .vga_blue_o  (                 )
+  .vga_blue_o  (                 ),
+  // New physical USB ports
+  .usb_clk_i   ( 1'b0            ),
+  .usb_rst_ni  ( 1'b0            ),
+  .usb_dm_i    ( '0              ),
+  .usb_dm_o    (                 ),
+  .usb_dm_oe_o (                 ),
+  .usb_dp_i    ( '0              ),
+  .usb_dp_o    (                 ),
+  .usb_dp_oe_o (                 ),
+  // New SRAM macro implementation hook vectors
+  .cva6_sram_impl_i ( '0         ),
+  .llc_sram_impl_i  ( '0         )
 );
 
 assign hyper_isolate_req = car_regs_reg2hw.periph_isolate.q;
