@@ -621,7 +621,7 @@ localparam cheshire_cfg_t CheshireCfg = '{
   Cva6SuperscalarEn           : cva6_config_pkg::CVA6ConfigSuperscalarEn,
 
   // Harts
-  NumCores                    : 2,
+  NumCores                    : 1,
   NumExtIrqHarts              : CarfieldNumInterruptibleHarts,
   NumExtDbgHarts              : 1, // 0 breaks things
   CoreUserAmoOffs             : 0, // Convention: lower AMO bits for cores, MSB for serial link
