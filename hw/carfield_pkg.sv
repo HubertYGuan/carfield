@@ -681,14 +681,14 @@ localparam cheshire_cfg_t CheshireCfg = '{
   // Features
   Bootrom                     : 1,
   Uart                        : 1,
-  I2c                         : 0,
+  I2c                         : 1,
   SpiHost                     : 1,
   Gpio                        : 1,
   Dma                         : 1,
   SerialLink                  : 1,
   Vga                         : 0,
   Usb                         : cheshire_pkg::DefaultCfg.Usb, // Added structural requirement
-  AxiRt                       : 0,
+  AxiRt                       : 1,
   Clic                        : 1,
   IrqRouter                   : 1,
   BusErr                      : 1,
