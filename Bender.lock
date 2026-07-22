@@ -239,6 +239,19 @@ packages:
     - redundancy_cells
     - register_interface
     - tech_cells_generic
+  embedded_cohort:
+    revision: cae6bf0ee637a1f0c2630606acb1bc931fc9e215
+    version: null
+    source:
+      Git: git@github.com:HubertYGuan/embedded_cohort.git
+    dependencies:
+    - axi
+    - axi_riscv_atomics
+    - common_cells
+    - common_verification
+    - redundancy_cells
+    - register_interface
+    - tech_cells_generic
   event_unit_flex:
     revision: 28e0499374117c7b0ef4c6ad81b60d7526af886f
     version: null

@@ -28,7 +28,8 @@ dependencies:
   common_cells:       { git: https://github.com/pulp-platform/common_cells.git,         version: 1.31.1                               }
   pulp-ethernet:      { git: https://github.com/pulp-platform/pulp-ethernet.git,        rev: bdc8031ab270a49da28df269266ce9ab9a133636 } # branch: carfield
   riscv-dbg:          { git: https://github.com/pulp-platform/riscv-dbg.git,            version: =0.8.0                               }
-  dram_rtl_sim:       { git: "https://github.com/pulp-platform/dram_rtl_sim.git",       version: 0.1.1  }
+  dram_rtl_sim:       { git: "https://github.com/pulp-platform/dram_rtl_sim.git",       version: 0.1.1                                }
+  embedded_cohort:    { git: git@github.com:HubertYGuan/embedded_cohort.git,            rev: cae6bf0ee637a1f0c2630606acb1bc931fc9e215 }
 
 workspace:
   package_links:
